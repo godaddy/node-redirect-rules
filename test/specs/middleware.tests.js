@@ -39,6 +39,16 @@ describe('The connect-redirector middleware', function() {
     });
   });
 
+  it('treats string conditions prefixed with "regex:" as regular expressions', function(done) {
+    var rule = { "from": "regex:/^\/customer\/(.*?)$/i", "to": "//crm/customer?id={url$1}" };
+
+    app.verifyRules(rule, 'http://localhost:51789/Customer/23598', function(err, res) {
+      expect(res.statusCode).to.equal(301);
+      expect(res.headers.location).to.equal('//crm/customer?id=23598');
+      done();
+    });
+  });
+
   it('does not redirect when there\'s no exact match', function(done) {
     var rule = { from: '/some/path', to: '/target/path' };
 
