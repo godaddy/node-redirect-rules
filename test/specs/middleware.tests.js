@@ -39,8 +39,18 @@ describe('The connect-redirector middleware', function() {
     });
   });
 
-  it('does not redirect when there\'s no match', function(done) {
+  it('does not redirect when there\'s no exact match', function(done) {
     var rule = { from: '/some/path', to: '/target/path' };
+
+    app.verifyRules(rule, 'http://localhost:51789/another/path', function(err, res) {
+      expect(err).to.not.exist;
+      expect(res.statusCode).to.equal(204);
+      done();
+    });
+  });
+
+  it('does not redirect when there\'s no regex match', function(done) {
+    var rule = { from: /\/some\/path/, to: '/target/path' };
 
     app.verifyRules(rule, 'http://localhost:51789/another/path', function(err, res) {
       expect(err).to.not.exist;
