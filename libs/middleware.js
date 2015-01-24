@@ -1,5 +1,6 @@
 module.exports = createMiddlewareForRules;
 
+var _ = require('lodash');
 var matchers = require('./matchers');
 var placeholders = require('./placeholders');
 
@@ -35,18 +36,27 @@ function tryMatch(rule, req) {
     conditions = { url: conditions };
   }
 
-  var props = Object.keys(conditions);
-  for (var i = 0; i < props.length; i++) {
-    var prop = props[i];
-    if (prop in matchers) {
-      var match = matchers[prop](req, conditions[prop]);
-      if (match) {
-        return {
-          status: rule.status,
-          targetURL: generateTargetURL(rule.to, req, match)
-        };
-      }
-    }
+  var allMatches = {};
+  var allConditionsMatch = Object
+    .keys(conditions)
+    .every(function(prop) {
+      var matcher = matchers[prop];
+      if (!matcher)
+        return false;
+
+      var match = matcher(req, conditions[prop]);
+      if (!match)
+        return false;
+
+      _.assign(allMatches, match);
+      return true;
+    });
+
+  if (allConditionsMatch) {
+    return {
+      status: rule.status,
+      targetURL: generateTargetURL(rule.to, req, allMatches)
+    };
   }
 }
 

@@ -18,6 +18,7 @@
     "verify-full-coverage": "istanbul check-coverage --statements 100 --functions 100 --branches 100 --lines 100"
   },
   "dependencies": {
+    "lodash": "^2.4.1",
     "require-directory": "^2.0.0"
   }
 }

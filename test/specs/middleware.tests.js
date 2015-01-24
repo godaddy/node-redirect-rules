@@ -73,6 +73,19 @@ describe('The connect-redirector middleware', function() {
     });
   });
 
+  it('requires all conditions to match when multiple conditions are present', function(done) {
+    var rule = {
+      from: { path: '/path/a', params: { complete: true } },
+      to: '/path/b'
+    };
+
+    app.verifyRules(rule, 'http://localhost:51789/path/a', function(err, res) {
+      expect(err).to.not.exist;
+      expect(res.statusCode).to.equal(204);
+      done();
+    });
+  });
+
   it('fails a match when unknown match conditions are encountered', function(done) {
     var rules = [
       { from: { lastName: 'Jones' }, to: '/some/path' }

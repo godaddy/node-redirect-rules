@@ -3,6 +3,8 @@ module.exports = {
   matchMap: matchConditionMap
 };
 
+var _ = require('lodash');
+
 function matchCondition(conditionName, conditionValue, value) {
   if (conditionValue instanceof RegExp) {
     var match = conditionValue.exec(value);
@@ -14,7 +16,7 @@ function matchCondition(conditionName, conditionValue, value) {
       }
       return result;
     }
-  } else if (value === conditionValue) {
+  } else if (value == conditionValue) { // Intentional non-strict equality
     result = {};
     result[conditionName] = value;
     return result;
@@ -30,9 +32,7 @@ function matchConditionMap(conditionName, conditionValues, requestValues) {
       conditionValues[key],
       requestValues[key]);
     if (matchForProperty) {
-      Object.keys(matchForProperty).forEach(function(key) {
-        result[key] = matchForProperty[key];
-      })
+      _.assign(result, matchForProperty);
     }
     return !!matchForProperty;
   });
