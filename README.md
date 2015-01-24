@@ -94,53 +94,53 @@ The following matchers are supported:
   </thead>
   <tbody>
     <tr>
-      <td><code>headers</code></td>
-      <td><code>from: { headers: { 'user-agent': /Trident/ } }</code></td>
+      <td><pre><code>headers</code></pre></td>
+      <td><pre><code>from: { headers: { 'user-agent': /Trident/ } }</code></pre></td>
       <td>Matches when all specified HTTP headers are present</td>
     </tr>
     <tr>
-      <td><code>hostname</code></td>
-      <td><code>from: { hostname: 'www.mydomain.com' }</code></td>
+      <td><pre><code>hostname</code></pre></td>
+      <td><pre><code>from: { hostname: 'www.mydomain.com' }</code></pre></td>
       <td>Matches the host HTTP header, minus any port</td>
     </tr>
     <tr>
-      <td><code>method</code></td>
-      <td><code>from: { hostname: 'www.mydomain.com' }</code></td>
+      <td><pre><code>method</code></pre></td>
+      <td><pre><code>from: { hostname: 'www.mydomain.com' }</code></pre></td>
       <td>Matches the HTTP method of the request</td>
     </tr>
     <tr>
-      <td><code>params</code></td>
-      <td><code>from: { params: { locale: /^es-/ } }</code></td>
+      <td><pre><code>params</code></pre></td>
+      <td><pre><code>from: { params: { locale: /^es-/ } }</code></pre></td>
       <td>Matches when all specified query-string parameters are present</td>
     </tr>
     <tr>
-      <td><code>path</code></td>
-      <td><code>from: { path: '/some/path' }</code></td>
+      <td><pre><code>path</code></pre></td>
+      <td><pre><code>from: { path: '/some/path' }</code></pre></td>
       <td>Matches the URL, minus the query string</td>
     </tr>
     <tr>
-      <td><code>port</code></td>
-      <td><code>from: { port: 443 }</code></td>
+      <td><pre><code>port</code></pre></td>
+      <td><pre><code>from: { port: 443 }</code></pre></td>
       <td>
         Matches the port number specified in the host header; if the port is not explicitly present in the header,
         it will assume the default port number of the protocol
       </td>
     </tr>
     <tr>
-      <td><code>protocol</code></td>
-      <td><code>from: { protocol: 'https' }</code></td>
+      <td><pre><code>protocol</code></pre></td>
+      <td><pre><code>from: { protocol: 'https' }</code></pre></td>
       <td>
         Matches the protocol of the request; only http and https are supported at this time
       </td>
     </tr>
     <tr>
-      <td><code>scheme</code></td>
-      <td><code>from: { scheme: 'https' }</code></td>
+      <td><pre><code>scheme</code></pre></td>
+      <td><pre><code>from: { scheme: 'https' }</code></pre></td>
       <td>Alias for protocol</td>
     </tr>
     <tr>
-      <td><code>url</code></td>
-      <td><code>from: { url: '/some/url?foo=bar' }</code></td>
+      <td><pre><code>url</code></pre></td>
+      <td><pre><code>from: { url: '/some/url?foo=bar' }</code></pre></td>
       <td>Matches the path and query string of the URL. This does not include the scheme, hostname, or port</td>
     </tr>
   </tbody>
@@ -163,47 +163,47 @@ The following variables are supported:
   </thead>
   <tbody>
     <tr>
-      <td><code>{headers.<name>}</code></td>
+      <td><pre><code>{headers.<name>}</code></pre></td>
       <td>The value of an HTTP header</td>
     </tr>
     <tr>
-      <td><code>{host}</code></td>
+      <td><pre><code>{host}</code></pre></td>
       <td>The value of the HTTP host header</td>
     </tr>
     <tr>
-      <td><code>{hostname}</code></td>
+      <td><pre><code>{hostname}</code></pre></td>
       <td>The value of the HTTP host header, minus the port number</td>
     </tr>
     <tr>
-      <td><code>{method}</code></td>
+      <td><pre><code>{method}</code></pre></td>
       <td>The value of the HTTP method, lower-cased</td>
     </tr>
     <tr>
-      <td><code>{params.<name>}</code></td>
+      <td><pre><code>{params.<name>}</code></pre></td>
       <td>The value of a query string parameter</td>
     </tr>
     <tr>
-      <td><code>{path}</code></td>
+      <td><pre><code>{path}</code></pre></td>
       <td>The URL, minus the protocol, hostname, port, and query string</td>
     </tr>
     <tr>
-      <td><code>{port}</code></td>
+      <td><pre><code>{port}</code></pre></td>
       <td>The TCP port number</td>
     </tr>
     <tr>
-      <td><code>{protocol}</code></td>
+      <td><pre><code>{protocol}</code></pre></td>
       <td>Either http or https</td>
     </tr>
     <tr>
-      <td><code>{query}</code></td>
+      <td><pre><code>{query}</code></pre></td>
       <td>The query string, including the ?; accidental double-?s are automatically corrected</td>
     </tr>
     <tr>
-      <td><code>{scheme}</code></td>
-      <td>Alias for <code>{protocol}</code></td>
+      <td><pre><code>{scheme}</code></pre></td>
+      <td>Alias for <code>{protocol}</code></pre></td>
     </tr>
     <tr>
-      <td><code>{url}</code></td>
+      <td><pre><code>{url}</code></pre></td>
       <td>The URL, minus the protocol, hostname, and port</td>
     </tr>
   </tbody>
