@@ -75,6 +75,19 @@ describe('The connect-redirector middleware', function() {
     });
   });
 
+  it('supports positional regex match variables in target URLs', function(done) {
+    var rules = [
+      { from: /\/(.*?)\/(.*)/, to: '/{url$1}s/{url$2}' }
+    ];
+
+    app.verifyRules(rules, 'http://localhost:51789/customer/263', function(err, res) {
+      expect(err).to.not.exist;
+      expect(res.statusCode).to.equal(301);
+      expect(res.headers.location).to.equal('/customers/263');
+      done();
+    });
+  });
+
   after(function(done) {
     app.stop(done);
   });

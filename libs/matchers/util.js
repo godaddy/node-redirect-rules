@@ -8,9 +8,9 @@ function matchAgainstConditionValue(conditionName, conditionValue, value) {
     if (match) {
       var result = { url: match[0] };
       for (var i = 0; i < match.length; i++) {
-        result[conditionName + '.$' + i] = match[i];
+        result[conditionName + '$' + i] = match[i];
       }
-      return match;
+      return result;
     }
   } else if (value === conditionValue) {
     result = {};
