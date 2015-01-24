@@ -1,8 +1,9 @@
 module.exports = {
-  match: matchAgainstConditionValue
+  match: matchCondition,
+  matchMap: matchConditionMap
 };
 
-function matchAgainstConditionValue(conditionName, conditionValue, value) {
+function matchCondition(conditionName, conditionValue, value) {
   if (conditionValue instanceof RegExp) {
     var match = conditionValue.exec(value);
     if (match) {
@@ -18,4 +19,22 @@ function matchAgainstConditionValue(conditionName, conditionValue, value) {
     result[conditionName] = value;
     return result;
   }
+}
+
+function matchConditionMap(conditionName, conditionValues, requestValues) {
+  var expectedKeys = Object.keys(conditionValues);
+  var result = {};
+  var matched = expectedKeys.every(function(key) {
+    var matchForProperty = matchCondition(
+      conditionName + '.' + key,
+      conditionValues[key],
+      requestValues[key]);
+    if (matchForProperty) {
+      Object.keys(matchForProperty).forEach(function(key) {
+        result[key] = matchForProperty[key];
+      })
+    }
+    return !!matchForProperty;
+  });
+  return matched ? result : null;
 }
