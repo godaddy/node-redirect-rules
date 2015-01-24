@@ -163,7 +163,7 @@ The following variables are supported:
   </thead>
   <tbody>
     <tr>
-      <td><code>{headers.<name>}</code></td>
+      <td><code>{headers.&lt;name&gt;}</code></td>
       <td>The value of an HTTP header</td>
     </tr>
     <tr>
@@ -179,7 +179,7 @@ The following variables are supported:
       <td>The value of the HTTP method, lower-cased</td>
     </tr>
     <tr>
-      <td><code>{params.<name>}</code></td>
+      <td><code>{params.&lt;name&gt;}</code></td>
       <td>The value of a query string parameter</td>
     </tr>
     <tr>
