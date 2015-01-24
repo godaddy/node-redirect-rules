@@ -12,7 +12,7 @@ describe('The path placeholder', function() {
   });
 
   it('outputs the URL without the query string', function(done) {
-    var rule = { from: /.*/, to: 'http://newdomain.com{path}' };
+    var rule = { from: /.*/, to: 'http://newdomain.com/{path}' };
     var opts = { url: test.baseUrl + 'some/path?param=value' };
     app.verifyRules(rule, opts, function(err, res) {
       expect(err).to.not.exist;

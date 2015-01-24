@@ -12,7 +12,7 @@ describe('The hostname matcher', function() {
   });
 
   it('matches the hostname of a request', function(done) {
-    var rule = { from: { hostname: 'foo.com' }, to: 'http://otherdomain.com{url}' };
+    var rule = { from: { hostname: 'foo.com' }, to: 'http://otherdomain.com/{url}' };
     var opts = { url: test.baseUrl + 'rest/of/url', headers: { "host": "foo.com" } };
     app.verifyRules(rule, opts, function(err, res) {
       expect(err).to.not.exist;

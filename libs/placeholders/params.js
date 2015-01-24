@@ -1,5 +1,5 @@
 var parseRequest = require('../parseRequest');
 
 module.exports = function(req) {
-  return parseRequest(req).search;
+  return parseRequest(req).query;
 };

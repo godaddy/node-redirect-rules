@@ -1,7 +1,7 @@
 var expect = require('chai').expect;
 var test = require('../../util');
 
-describe('The headers placeholder', function() {
+describe('The query placeholder', function() {
   var app;
 
   before(function(done) {
@@ -11,13 +11,13 @@ describe('The headers placeholder', function() {
     });
   });
 
-  it('can output the value of an HTTP request header', function(done) {
-    var rule = { from: /.*/, to: '/{headers.x-app-name}/{url}' };
-    var opts = { url: test.baseUrl + 'rest/of/url', headers: { "x-app-name": "foo" } };
+  it('outputs the query string of a request, including the "?"', function(done) {
+    var rule = { from: /.*/, to: '/error?{query}' };
+    var opts = { url: 'http://localhost:51789/something/?foo=bar' };
     app.verifyRules(rule, opts, function(err, res) {
       expect(err).to.not.exist;
       expect(res.statusCode).to.equal(301);
-      expect(res.headers.location).to.equal('/foo/rest/of/url');
+      expect(res.headers.location).to.equal('/error?foo=bar');
       done();
     });
   });

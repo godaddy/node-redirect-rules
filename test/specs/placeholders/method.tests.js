@@ -12,7 +12,7 @@ describe('The method placeholder', function() {
   });
 
   it('outputs the lower-cased method (verb) of the request', function(done) {
-    var rule = { from: /.*/, to: '/some/silly/api/{method}{path}' };
+    var rule = { from: /.*/, to: '/some/silly/api/{method}/{path}' };
     var opts = { url: test.baseUrl + 'foo/bar' };
     app.verifyRules(rule, opts, function(err, res) {
       expect(err).to.not.exist;

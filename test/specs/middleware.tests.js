@@ -40,9 +40,9 @@ describe('The connect-redirector middleware', function() {
   });
 
   it('does not redirect when there\'s no match', function(done) {
-    var targetUrl = '/target/path';
+    var rule = { from: '/some/path', to: '/target/path' };
 
-    app.verifyRules({ from: '/some/path', to: targetUrl }, 'http://localhost:51789/another/path', function(err, res) {
+    app.verifyRules(rule, 'http://localhost:51789/another/path', function(err, res) {
       expect(err).to.not.exist;
       expect(res.statusCode).to.equal(204);
       done();
@@ -84,6 +84,32 @@ describe('The connect-redirector middleware', function() {
       expect(err).to.not.exist;
       expect(res.statusCode).to.equal(301);
       expect(res.headers.location).to.equal('/customers/263');
+      done();
+    });
+  });
+
+  it('removes unknown placeholders from target URLs', function(done) {
+    var rules = [
+      { from: /.*/, to: '/{unknown}/{url}' }
+    ];
+
+    app.verifyRules(rules, 'http://localhost:51789/customer/263', function(err, res) {
+      expect(err).to.not.exist;
+      expect(res.statusCode).to.equal(301);
+      expect(res.headers.location).to.equal('/customer/263');
+      done();
+    });
+  });
+
+  it('does not replace the leading double-slash from no-schema URLs', function(done) {
+    var rules = [
+      { from: /.*/, to: '//otherhost.com/{url}' }
+    ];
+
+    app.verifyRules(rules, 'http://localhost:51789/customer/263', function(err, res) {
+      expect(err).to.not.exist;
+      expect(res.statusCode).to.equal(301);
+      expect(res.headers.location).to.equal('//otherhost.com/customer/263');
       done();
     });
   });

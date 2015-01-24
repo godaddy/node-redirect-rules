@@ -12,7 +12,7 @@ describe('The host placeholder', function() {
   });
 
   it('uses the host header of the request', function(done) {
-    var rule = { from: /.*/, to: '/{host}{url}' };
+    var rule = { from: /.*/, to: '/{host}/{url}' };
     var opts = { url: test.baseUrl + 'rest/of/url', headers: { host: "fakedomain.com" } };
     app.verifyRules(rule, opts, function(err, res) {
       expect(err).to.not.exist;

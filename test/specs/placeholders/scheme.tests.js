@@ -16,7 +16,7 @@ describe('The scheme placeholder', function() {
 
     it('is "http"', function(done) {
 
-      app.verifyRules({ from: /.*/, to: '{scheme}://some.host.com{url}' }, test.baseUrl, function(err, res) {
+      app.verifyRules({ from: /.*/, to: '{scheme}://some.host.com/{url}' }, test.baseUrl, function(err, res) {
         expect(err).to.not.exist;
         expect(res.statusCode).to.equal(301);
         expect(res.headers.location).to.equal('http://some.host.com/');
@@ -44,7 +44,7 @@ describe('The scheme placeholder', function() {
 
     it('is "https"', function(done) {
 
-      var rule = { from: /.*/, to: '{scheme}://some.host.com{url}' };
+      var rule = { from: /.*/, to: '{scheme}://some.host.com/{url}' };
       app.verifyRules(rule, test.baseUrl.replace('http', 'https'), function(err, res) {
         expect(err).to.not.exist;
         expect(res.statusCode).to.equal(301);

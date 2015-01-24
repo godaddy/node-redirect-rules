@@ -50,20 +50,35 @@ function tryMatch(rule, req) {
   }
 }
 
+var SCHEMALESS_PREFIX = /^\/\//;
+var DOUBLE_SLASHES_AFTER_BEGINNING = /([^\/])\/{2,}/g;
+var DOUBLE_SLASHES_NOT_FOLLOWING_COLON = /([^:\/]|^)\/{2,}/g;
+var PLACEHOLDERS = /\{([^}]*?)}/g;
+var DOUBLE_QUESTION_MARKS = /\?{2,}/g;
+
 function generateTargetURL(pattern, req, match) {
-  return pattern.replace(/\{([^}]*?)}/g, function(substr, placeholder) {
-    if (placeholder in match) {
-      return match[placeholder];
-    }
+  var unwantedDoubleSlashes = SCHEMALESS_PREFIX.test(pattern)
+    ? DOUBLE_SLASHES_AFTER_BEGINNING
+    : DOUBLE_SLASHES_NOT_FOLLOWING_COLON;
+  return pattern
+    // Substitute placeholders
+    .replace(PLACEHOLDERS, function(substr, placeholder) {
+      if (placeholder in match) {
+        return match[placeholder];
+      }
 
-    var parts = placeholder.split('.');
-    placeholder = parts[0];
-    var param = parts[1];
-    if (placeholder in placeholders) {
-      var result = placeholders[placeholder](req);
-      return param ? result[param] : result;
-    }
+      var parts = placeholder.split('.');
+      placeholder = parts[0];
+      var param = parts[1];
+      if (placeholder in placeholders) {
+        var result = placeholders[placeholder](req);
+        return param ? result[param] : result;
+      }
 
-    return substr;
-  });
+      return '';
+    })
+    // Clean up double slashes, which could result from empty placeholders in the URL
+    .replace(unwantedDoubleSlashes, '$1/')
+    // Clean up double question marks, which could result from doing '?{query}'
+    .replace(DOUBLE_QUESTION_MARKS, '?');
 }
