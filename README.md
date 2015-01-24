@@ -69,7 +69,7 @@ A rule contains three properties:
 The `from` property of rules is an map of matchers to condition values:
 
 ```javascript
-var rule = {
+{
     host: 'some.domain.com',
     path: '/some/path'
 };
