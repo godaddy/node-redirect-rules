@@ -6,7 +6,8 @@ function matchAgainstConditionValue(conditionName, conditionValue, value) {
   if (conditionValue instanceof RegExp) {
     var match = conditionValue.exec(value);
     if (match) {
-      var result = { url: match[0] };
+      var result = { };
+      result[conditionName] = match[0];
       for (var i = 0; i < match.length; i++) {
         result[conditionName + '$' + i] = match[i];
       }
