@@ -1,3 +1,3 @@
 module.exports = function(req) {
-  return req.method;
+  return req.method.toLowerCase();
 };

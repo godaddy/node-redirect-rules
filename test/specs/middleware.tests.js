@@ -4,7 +4,7 @@ var test = require('./../util');
 
 var http = require('http');
 
-describe('A connect-redirector rule', function() {
+describe('The connect-redirector middleware', function() {
   var app;
 
   before(function(done) {
@@ -45,6 +45,20 @@ describe('A connect-redirector rule', function() {
     app.verifyRules({ from: '/some/path', to: targetUrl }, 'http://localhost:51789/another/path', function(err, res) {
       expect(err).to.not.exist;
       expect(res.statusCode).to.equal(204);
+      done();
+    });
+  });
+
+  it('handles an array of rules', function(done) {
+    var rules = [
+      { from: '/path/a', to: '/path/b' },
+      { from: '/path/c', to: '/path/d' }
+    ];
+
+    app.verifyRules(rules, 'http://localhost:51789/path/c', function(err, res) {
+      expect(err).to.not.exist;
+      expect(res.statusCode).to.equal(301);
+      expect(res.headers.location).to.equal('/path/d');
       done();
     });
   });
