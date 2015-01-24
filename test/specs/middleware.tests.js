@@ -63,6 +63,18 @@ describe('The connect-redirector middleware', function() {
     });
   });
 
+  it('fails a match when unknown match conditions are encountered', function(done) {
+    var rules = [
+      { from: { lastName: 'Jones' }, to: '/some/path' }
+    ];
+
+    app.verifyRules(rules, 'http://localhost:51789/', function(err, res) {
+      expect(err).to.not.exist;
+      expect(res.statusCode).to.equal(204);
+      done();
+    });
+  });
+
   after(function(done) {
     app.stop(done);
   });
