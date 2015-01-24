@@ -4,6 +4,7 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 module.exports = {
   port: DEFAULT_PORT,
   baseUrl: 'http://127.0.0.1:' + DEFAULT_PORT + '/',
+  secureBaseUrl: 'https://127.0.0.1:' + DEFAULT_PORT + '/',
   startHTTPApp: startHTTPApp,
   startHTTPSApp: startHTTPSApp
 };
