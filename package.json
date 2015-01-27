@@ -1,7 +1,7 @@
 {
-  "name": "connect-redirector",
+  "name": "redirect-rules",
   "version": "0.0.1",
-  "repository": "https://github.secureserver.net/jpage/node-connect-redirector",
+  "repository": "https://github.secureserver.net/PC/redirect-rules",
   "devDependencies": {
     "chai": "^1.10.0",
     "connect": "^3.3.4",
