@@ -1,4 +1,4 @@
-connect-redirector
+redirect-rules
 =======================
 
 Flexible redirect rule engine for connect middleware
@@ -6,7 +6,7 @@ Flexible redirect rule engine for connect middleware
 # Usage
 
 ```javascript
-var redirector = require('connect-redirector');
+var redirector = require('redirect-rules');
 var rules = [
   {
     from: '/some/url',
@@ -34,13 +34,13 @@ app.use(redirector(rules));
 
 # Description
 
-The `connect-redirector` middleware is a flexible rules-based engine for redirecting requests. It supports matching
+The `redirect-rules` middleware is a flexible rules-based engine for redirecting requests. It supports matching
 multiple conditions and can easily generate redirect URLs based on conditional match results.
 
 To create the middleware, simply pass a rule object into the module-level function:
 
 ```javascript
-var redirector = require('connect-redirector');
+var redirector = require('redirect-rules');
 var rule = { from: '/url1', to: '/url2' };
 app.use(redirector(rule));
 ```
@@ -48,7 +48,7 @@ app.use(redirector(rule));
 To specify multiple redirect rules, pass an `Array`; the rules will be tested in order until a match is found:
 
 ```javascript
-var redirector = require('connect-redirector');
+var redirector = require('redirect-rules');
 var rules = [
     { from: '/url1', to: '/url2' },
     { from: '/url3', to: '/url4' }
