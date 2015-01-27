@@ -1,7 +1,18 @@
 {
   "name": "redirect-rules",
   "version": "0.0.1",
+  "author": "Jacob Page <jpage@godaddy.com>",
+  "license": "MIT",
+  "keywords": [
+    "connect",
+    "express",
+    "middleware",
+    "redirect"
+  ],
   "repository": "https://github.secureserver.net/PC/redirect-rules",
+  "publishConfig": {
+    "registry": "http://registry.npmjs.org/"
+  },
   "devDependencies": {
     "chai": "^1.10.0",
     "connect": "^3.3.4",

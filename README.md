@@ -3,6 +3,7 @@ redirect-rules
 
 Flexible redirect rule engine for connect middleware
 
+[![npm version](https://badge.fury.io/js/redirect-rules.svg)](http://badge.fury.io/js/redirect-rules)
 [![Build Status](https://travis-ci.org/godaddy/node-redirect-rules.svg?branch=master)](https://travis-ci.org/godaddy/node-redirect-rules)
 
 # Usage
