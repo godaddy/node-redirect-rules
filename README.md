@@ -3,6 +3,8 @@ redirect-rules
 
 Flexible redirect rule engine for connect middleware
 
+[![Build Status](https://travis-ci.org/godaddy/node-redirect-rules.svg?branch=master)](https://travis-ci.org/godaddy/node-redirect-rules)
+
 # Usage
 
 ```javascript
