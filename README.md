@@ -85,7 +85,7 @@ The `from` property of rules is an map of matchers to condition values:
 
 ```javascript
 {
-    host: 'some.domain.com',
+    hostname: 'some.domain.com',
     path: '/some/path'
 };
 ```
@@ -120,7 +120,7 @@ The following matchers are supported:
     </tr>
     <tr>
       <td><code>method</code></td>
-      <td><pre><code>from: { hostname: 'www.mydomain.com' }</code></pre></td>
+      <td><pre><code>from: { method: 'GET' }</code></pre></td>
       <td>Matches the HTTP method of the request</td>
     </tr>
     <tr>
