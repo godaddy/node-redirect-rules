@@ -9,7 +9,7 @@
     "middleware",
     "redirect"
   ],
-  "repository": "https://github.secureserver.net/PC/redirect-rules",
+  "repository": "https://github.com/godaddy/node-redirect-rules",
   "publishConfig": {
     "registry": "http://registry.npmjs.org/"
   },
