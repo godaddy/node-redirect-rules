@@ -16,9 +16,9 @@
   "devDependencies": {
     "chai": "^1.10.0",
     "connect": "^3.3.4",
-    "istanbul": "^0.3.5",
-    "mocha": "^2.1.0",
-    "request": "^2.51.0",
+    "istanbul": "^0.4.5",
+    "mocha": "^5.2.0",
+    "request": "^2.88.0",
     "sinon": "^1.12.2",
     "sinon-chai": "^2.6.0"
   },
@@ -29,7 +29,7 @@
     "verify-full-coverage": "istanbul check-coverage --statements 100 --functions 100 --branches 100 --lines 100"
   },
   "dependencies": {
-    "lodash": "^2.4.1",
+    "lodash": "^4.17.11",
     "require-directory": "^2.0.0"
   }
 }
