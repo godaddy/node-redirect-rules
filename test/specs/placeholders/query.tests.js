@@ -22,6 +22,17 @@ describe('The query placeholder', function() {
     });
   });
 
+  it('handles empty query strings', function(done) {
+    var rule = { from: /.*/, to: '/error{query}' };
+    var opts = { url: 'http://localhost:51789/something/' };
+    app.verifyRules(rule, opts, function(err, res) {
+      expect(err).to.not.exist;
+      expect(res.statusCode).to.equal(301);
+      expect(res.headers.location).to.equal('/error');
+      done();
+    });
+  });
+
   after(function(done) {
     app.stop(done);
   });
