@@ -72,4 +72,36 @@ describe('The port matcher', function() {
     });
 
   });
+
+  if (test.supportsHttp2) {
+    describe('for HTTP2 servers', function () {
+
+      var app;
+
+      before(function (done) {
+        test.startHTTP2App(function (err, result) {
+          app = result;
+          done(err);
+        });
+      });
+
+      it('uses the authority pseudo-header', function (done) {
+        var rule = { from: { port: test.port }, to: 'http://otherdomain.com/{url}' };
+        var opts = {
+          url: (test.baseUrl + 'rest/of/url').replace('http', 'https')
+        };
+        app.verifyRules(rule, opts, function (err, headers) {
+          expect(err).to.not.exist;
+          expect(headers[':status']).to.equal(301);
+          expect(headers.location).to.equal('http://otherdomain.com/rest/of/url');
+          done();
+        });
+      });
+
+      after(function (done) {
+        app.stop(done);
+      });
+
+    });
+  }
 });
