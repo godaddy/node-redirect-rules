@@ -13,6 +13,7 @@
   "publishConfig": {
     "registry": "http://registry.npmjs.org/"
   },
+  "files": ["index.js", "libs"],
   "devDependencies": {
     "chai": "^1.10.0",
     "connect": "^3.3.4",
