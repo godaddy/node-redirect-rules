@@ -23,10 +23,7 @@
     "sinon-chai": "^2.6.0"
   },
   "scripts": {
-    "test": "npm run test-and-ensure-coverage",
-    "test-and-ensure-coverage": "npm run test-with-coverage && npm run verify-full-coverage",
-    "test-with-coverage": "istanbul cover ./node_modules/mocha/bin/_mocha -- --recursive -R nyan ./test/specs",
-    "verify-full-coverage": "istanbul check-coverage --statements 100 --functions 100 --branches 100 --lines 100"
+    "test": "istanbul cover ./node_modules/mocha/bin/_mocha -- --recursive -R nyan ./test/specs"
   },
   "dependencies": {
     "lodash": "^4.17.11",
