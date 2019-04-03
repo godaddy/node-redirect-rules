@@ -3,6 +3,7 @@ var fs = require('fs');
 var util = require('util');
 var http = require('http');
 var https = require('https');
+var url = require('url');
 var connect = require('connect');
 var request = require('request');
 var createMiddleware = require('..');
@@ -138,12 +139,12 @@ HTTP2Application.prototype.verifyRules = function (rules, requestOpts, cb) {
     requestOpts = { url: requestOpts };
   }
 
-  var url = new URL(requestOpts.url);
-  var session = http2.connect(`${url.protocol}//${url.host}`, {
+  var parsedURL = url.parse(requestOpts.url);
+  var session = http2.connect(`${parsedURL.protocol}//${parsedURL.host}`, {
     lookup: (hostname, opts, cb) => cb(null, '127.0.0.1', 4)
   });
   session
-    .request({ ':path': url.pathname })
+    .request({ ':path': parsedURL.pathname })
     .on('error', cb)
     .on('response', res => cb(null, res))
     .end();
