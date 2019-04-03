@@ -1,3 +1,5 @@
+var getAuthority = require('../utils/get-authority');
+
 module.exports = function(req) {
-  return req.headers.host || req.headers[':authority'];
+  return getAuthority(req.headers);
 };

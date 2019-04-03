@@ -1,6 +1,7 @@
 var match = require('./util').match;
+var parseAuthority = require('../utils/parse-authority');
 
 module.exports = function(req, value) {
-  var host = req.headers.host || req.headers[':authority'];
-  return match('hostname', value, host.split(':')[0], true);
+  var authority = parseAuthority(req.headers);
+  return match('hostname', value, authority.hostname, true);
 };
