@@ -1,3 +1,20 @@
+var path = require('path');
+var fs = require('fs');
+var util = require('util');
+var http = require('http');
+var https = require('https');
+var url = require('url');
+var connect = require('connect');
+var request = require('request');
+var createMiddleware = require('..');
+
+var http2;
+try {
+  http2 = require('http2');
+} catch (err) {
+  // Support testing on platforms without http2
+}
+
 var DEFAULT_PORT = 51789;
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
@@ -5,18 +22,11 @@ module.exports = {
   port: DEFAULT_PORT,
   baseUrl: 'http://127.0.0.1:' + DEFAULT_PORT + '/',
   secureBaseUrl: 'https://127.0.0.1:' + DEFAULT_PORT + '/',
-  startHTTPApp: startHTTPApp,
-  startHTTPSApp: startHTTPSApp
+  supportsHttp2: !!http2,
+  startHTTPApp,
+  startHTTPSApp,
+  startHTTP2App
 };
-
-var util = require('util');
-var path = require('path');
-var fs = require('fs');
-var http = require('http');
-var https = require('https');
-var connect = require('connect');
-var request = require('request');
-var createMiddleware = require('..');
 
 function startHTTPApp(cb) {
   var app = new HTTPApplication();
@@ -28,6 +38,15 @@ function startHTTPApp(cb) {
 function startHTTPSApp(cb) {
   fs.readFile(path.resolve(__dirname, './files/fakedomain.com.pfx'), function(err, pfx) {
     var app = new HTTPSApplication(pfx);
+    app.start(function(err) {
+      cb(err, app);
+    });
+  });
+}
+
+function startHTTP2App(cb) {
+  fs.readFile(path.resolve(__dirname, './files/fakedomain.com.pfx'), function(err, pfx) {
+    var app = new HTTP2Application(pfx);
     app.start(function(err) {
       cb(err, app);
     });
@@ -57,11 +76,7 @@ HTTPApplication.prototype = {
         res.end();
       });
 
-    var createServer = this.opts
-      ? this.protocol.createServer.bind(this.protocol, this.opts, connectApp)
-      : this.protocol.createServer.bind(this.protocol, connectApp);
-
-    this.server = createServer()
+    this.server = this.createServer(connectApp)
       .on('connection', function (socket) {
         var socketId = nextSocketId++;
         this.sockets[socketId] = socket;
@@ -72,7 +87,13 @@ HTTPApplication.prototype = {
       .listen(DEFAULT_PORT, cb);
   },
 
-  verifyRules: function(rules, requestOpts, cb) {
+  createServer: function(app) {
+    return this.opts
+      ? this.protocol.createServer(this.opts, app)
+      : this.protocol.createServer(app);
+  },
+
+  verifyRules: function (rules, requestOpts, cb) {
     this.middleware = createMiddleware(rules);
 
     if (typeof(requestOpts) === 'string') {
@@ -95,7 +116,6 @@ HTTPApplication.prototype = {
 
 
 util.inherits(HTTPSApplication, HTTPApplication);
-
 function HTTPSApplication(pfx) {
   HTTPApplication.call(this, https, {
     pfx: pfx,
@@ -103,3 +123,29 @@ function HTTPSApplication(pfx) {
     rejectUnauthorized: false
   });
 }
+
+
+util.inherits(HTTP2Application, HTTPSApplication);
+function HTTP2Application(pfx) {
+  HTTPSApplication.call(this, pfx);
+}
+HTTP2Application.prototype.createServer = function (app) {
+  return http2.createSecureServer(this.opts, app);
+};
+HTTP2Application.prototype.verifyRules = function (rules, requestOpts, cb) {
+  this.middleware = createMiddleware(rules);
+
+  if (typeof(requestOpts) === 'string') {
+    requestOpts = { url: requestOpts };
+  }
+
+  var parsedURL = url.parse(requestOpts.url);
+  var session = http2.connect(`${parsedURL.protocol}//${parsedURL.host}`, {
+    lookup: (hostname, opts, cb) => cb(null, '127.0.0.1', 4)
+  });
+  session
+    .request({ ':path': parsedURL.pathname })
+    .on('error', cb)
+    .on('response', res => cb(null, res))
+    .end();
+};
