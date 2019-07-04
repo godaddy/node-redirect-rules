@@ -27,10 +27,14 @@
     "sinon-chai": "^2.6.0"
   },
   "scripts": {
-    "test": "nyc mocha --recursive -R nyan ./test/specs"
+    "test": "nyc mocha --recursive -R nyan ./test/specs",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "dependencies": {
     "lodash": "^4.17.11",
-    "require-directory": "^2.0.0"
-  }
+    "require-directory": "^2.0.0",
+    "snyk": "^1.189.0"
+  },
+  "snyk": true
 }
