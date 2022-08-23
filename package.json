@@ -30,7 +30,7 @@
     "test": "nyc mocha --recursive -R nyan ./test/specs"
   },
   "dependencies": {
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "require-directory": "^2.0.0"
   }
 }
